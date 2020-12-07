@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
 
-const DATA_FILE_PATH: &str = "./txt/day01.txt";
+const DATA_FILE_PATH: &str = "./data/day01.txt";
 
 fn load_numbers_from_file(file_path: &str) -> Vec<i32> {
     let file = File::open(file_path).unwrap();
