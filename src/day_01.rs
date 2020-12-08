@@ -9,11 +9,10 @@ fn load_numbers_from_file(file_path: &str) -> Vec<i32> {
     let file = File::open(file_path).unwrap();
     let reader = BufReader::new(file);
 
-    let mut numbers: Vec<i32> = Vec::new();
-    for line in reader.lines() {
-        numbers.push(line.unwrap().parse::<i32>().unwrap())
-    }
-    return numbers;
+    return reader
+        .lines()
+        .map(|line| line.unwrap().parse::<i32>().unwrap())
+        .collect();
 }
 
 fn two_sum(numbers: &[i32], target: i32) -> Option<i32> {

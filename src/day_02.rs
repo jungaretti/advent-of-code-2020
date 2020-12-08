@@ -19,28 +19,27 @@ fn load_entires_from_file(file_path: &str) -> Vec<Entry> {
     let file = File::open(file_path).unwrap();
     let reader = BufReader::new(file);
 
-    let mut entries: Vec<Entry> = Vec::new();
-    for line in reader.lines() {
-        let whole_line = line.unwrap();
-        let policy_and_password: Vec<&str> = whole_line.split(':').collect();
-        let range_and_character: Vec<&str> = policy_and_password[0].split(" ").collect();
-        let minimum_and_maximum: Vec<&str> = range_and_character[0].split("-").collect();
+    return reader
+        .lines()
+        .map(|line| {
+            let whole_line = line.unwrap();
+            let policy_and_password: Vec<&str> = whole_line.split(':').collect();
+            let range_and_character: Vec<&str> = policy_and_password[0].split(" ").collect();
+            let minimum_and_maximum: Vec<&str> = range_and_character[0].split("-").collect();
 
-        let minimum = minimum_and_maximum[0].parse::<i32>().unwrap();
-        let maximum = minimum_and_maximum[1].parse::<i32>().unwrap();
-        let character = range_and_character[1].parse::<char>().unwrap();
-        let password = policy_and_password[1].to_owned();
+            let minimum = minimum_and_maximum[0].parse::<i32>().unwrap();
+            let maximum = minimum_and_maximum[1].parse::<i32>().unwrap();
+            let character = range_and_character[1].parse::<char>().unwrap();
+            let password = policy_and_password[1].to_owned();
 
-        let policy = Policy {
-            character,
-            minimum,
-            maximum,
-        };
-        let entry = Entry { policy, password };
-        entries.push(entry);
-    }
-
-    return entries;
+            let policy = Policy {
+                character,
+                minimum,
+                maximum,
+            };
+            return Entry { policy, password };
+        })
+        .collect();
 }
 
 pub fn day_02_challenge_1() -> i32 {
