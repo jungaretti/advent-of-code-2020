@@ -1,3 +1,4 @@
+use std::convert::TryInto;
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
@@ -53,6 +54,31 @@ pub fn day_02_challenge_1() -> i32 {
                 .filter(|character| character == &entry.policy.character)
                 .count() as i32;
             return count >= entry.policy.minimum && count <= entry.policy.maximum;
+        })
+        .count() as i32;
+}
+
+pub fn day_02_challenge_2() -> i32 {
+    let entires = load_entires_from_file(DATA_FILE_PATH);
+    return entires
+        .iter()
+        .filter(|entry| {
+            let password = entry.password.trim();
+            let min_index = entry.policy.minimum - 1;
+            let max_index = entry.policy.maximum - entry.policy.minimum;
+            let min_char = password
+                .chars()
+                .nth((min_index).try_into().unwrap())
+                .unwrap();
+            let max_char = password
+                .chars()
+                .nth((max_index).try_into().unwrap())
+                .unwrap();
+
+            let min_desired = min_char == entry.policy.character;
+            let max_desired = max_char == entry.policy.character;
+
+            return min_desired && !max_desired || !min_desired && max_desired;
         })
         .count() as i32;
 }
