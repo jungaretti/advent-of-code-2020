@@ -13,4 +13,5 @@ fn main() {
 
     println!("Day 3");
     println!("- Challenge 1: {}", day_03::day_03_challenge_1());
+    println!("- Challenge 2: {}", day_03::day_03_challenge_2());
 }
