@@ -1,5 +1,6 @@
 mod day_01;
 mod day_02;
+mod day_03;
 
 fn main() {
     println!("Day 1");
@@ -9,4 +10,7 @@ fn main() {
     println!("Day 2");
     println!("- Challenge 1: {}", day_02::day_02_challenge_1());
     println!("- Challenge 2: {}", day_02::day_02_challenge_2());
+
+    println!("Day 3");
+    println!("- Challenge 1: {}", day_03::day_03_challenge_1());
 }
