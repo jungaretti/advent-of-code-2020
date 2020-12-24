@@ -23,4 +23,5 @@ fn main() {
 
     println!("Day 5");
     println!("- Challenge 1: {}", day_05::challenge_1());
+    println!("- Challenge 2: {}", day_05::challenge_2().unwrap());
 }

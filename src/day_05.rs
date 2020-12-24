@@ -1,4 +1,5 @@
 use std::cmp;
+use std::collections::HashSet;
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
@@ -48,4 +49,23 @@ pub fn challenge_1() -> i32 {
         max_id = cmp::max(seat.id(), max_id);
     }
     return max_id;
+}
+
+pub fn challenge_2() -> Option<i32> {
+    let file = File::open(DATA_FILE_PATH).unwrap();
+    let mut lines = BufReader::new(file).lines().map(|line| line.unwrap());
+
+    let mut all_ids: HashSet<i32> = HashSet::new();
+    while let Some(line) = lines.next() {
+        let seat = Seat::from_boarding_pass(&line);
+        all_ids.insert(seat.id());
+    }
+
+    for id in 0..=challenge_1() {
+        if !all_ids.contains(&id) && all_ids.contains(&(id - 1)) && all_ids.contains(&(id + 1)) {
+            return Some(id);
+        }
+    }
+
+    return None;
 }
