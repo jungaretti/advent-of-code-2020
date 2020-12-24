@@ -53,15 +53,14 @@ pub fn challenge_1() -> i32 {
 
 pub fn challenge_2() -> Option<i32> {
     let file = File::open(DATA_FILE_PATH).unwrap();
-    let mut lines = BufReader::new(file).lines().map(|line| line.unwrap());
+    let lines = BufReader::new(file).lines().map(|line| line.unwrap());
 
-    let mut all_ids: HashSet<i32> = HashSet::new();
-    while let Some(line) = lines.next() {
-        let seat = Seat::from_boarding_pass(&line);
-        all_ids.insert(seat.id());
-    }
+    let max_id = challenge_1();
+    let all_ids: HashSet<i32> = lines
+        .map(|line| Seat::from_boarding_pass(&line).id())
+        .collect();
 
-    for id in 0..=challenge_1() {
+    for id in 0..=max_id {
         if !all_ids.contains(&id) && all_ids.contains(&(id - 1)) && all_ids.contains(&(id + 1)) {
             return Some(id);
         }
